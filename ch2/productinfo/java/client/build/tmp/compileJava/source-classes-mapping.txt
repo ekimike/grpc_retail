@@ -1,0 +1,24 @@
+ecommerce/ProductInfoGrpc.java
+ ecommerce.ProductInfoGrpc
+ ecommerce.ProductInfoGrpc$1
+ ecommerce.ProductInfoGrpc$MethodHandlers
+ ecommerce.ProductInfoGrpc$ProductInfoBaseDescriptorSupplier
+ ecommerce.ProductInfoGrpc$ProductInfoBlockingStub
+ ecommerce.ProductInfoGrpc$ProductInfoFileDescriptorSupplier
+ ecommerce.ProductInfoGrpc$ProductInfoFutureStub
+ ecommerce.ProductInfoGrpc$ProductInfoImplBase
+ ecommerce.ProductInfoGrpc$ProductInfoMethodDescriptorSupplier
+ ecommerce.ProductInfoGrpc$ProductInfoStub
+ecommerce/ProductInfoOuterClass.java
+ ecommerce.ProductInfoOuterClass
+ ecommerce.ProductInfoOuterClass$1
+ ecommerce.ProductInfoOuterClass$Product
+ ecommerce.ProductInfoOuterClass$Product$1
+ ecommerce.ProductInfoOuterClass$Product$Builder
+ ecommerce.ProductInfoOuterClass$ProductId
+ ecommerce.ProductInfoOuterClass$ProductId$1
+ ecommerce.ProductInfoOuterClass$ProductId$Builder
+ ecommerce.ProductInfoOuterClass$ProductIdOrBuilder
+ ecommerce.ProductInfoOuterClass$ProductOrBuilder
+ecommerce/ProductInfoClient.java
+ ecommerce.ProductInfoClient
