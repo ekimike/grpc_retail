@@ -18,11 +18,11 @@ export PATH=$PATH:/$GO_PATH/bin
 
 # STUB
 
-1. Create two directories: one for the `proto` and related files and the other one for the service
+1. Create two directories: one for the `proto file` and related files and the other one for the service
 
 2. Create the proto file inside the proto directory: `foo_bar.proto`. 
 
-This file needs: `option go_package = "server/ecommerce";`
+This file needs: `option go_package = "server/ecommerce";` because the module aid option which frees you up from setting up a home for each project.
 
 3. Install gRPC library:
 
@@ -56,20 +56,91 @@ This is because in the proto file we have defined: `option go_package = "server/
 go mod init productinfo/service
 ```
 
-7. `go.mod` file was created, add the following lines:
+7. `go.mod` file was created. here you don't need to add any extra line because dependencies will be fetched using the command: `go mod tidy`
 
-```go
-require (
-  github.com/gofrs/uuid v3.2.0
-  github.com/golang/protobuf v1.3.2
-  github.com/google/uuid v1.1.1
-  google.golang.org/grpc v1.24.0
-)
-```
 
 8. Implement business logic using the generated code. Create a Go file productinfo_service.go
 
 9. Create a Go Server
 
-## Implementing a gRPC Go client
+Before building the server binary run `go mod tidy` just in case. If you receive some error regarding GOPATH, double check the import statements 
+on all go files, first is module name and then the fisical directories created with protoc command.
+
+```go
+go build -v -o bin/server
+```
+
+
+## Implementing a Java Go client
+
+
+Create a gradle project, the most easy way is  using intellij
+
+```gradle
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+repositories {
+    mavenCentral()
+}
+
+
+def grpcVersion = '1.24.1'
+
+dependencies {
+    compile "io.grpc:grpc-netty:${grpcVersion}"
+    compile "io.grpc:grpc-protobuf:${grpcVersion}"
+    compile "io.grpc:grpc-stub:${grpcVersion}"
+    compile 'com.google.protobuf:protobuf-java:3.9.2'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.10'
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.9.2'
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "ecommerce.ProductInfoServer"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+apply plugin: 'application'
+
+startScripts.enabled = false
+```
+Again, create a directory called proto at the same level of main, add the proto file and build the project.
 
