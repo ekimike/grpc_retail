@@ -144,3 +144,49 @@ startScripts.enabled = false
 ```
 Again, create a directory called proto at the same level of main, add the proto file and build the project.
 
+
+# CHAPTER 3
+
+
+## gRPC Communicatios Patterns
+
+### Simple RPC (Unary RPC)
+
+Single request, single response.
+
+```Go
+service Foo() {
+    rpc getFoo(google.protofbuf.StringValue) returns (Bar);
+}
+```
+
+### Server Streaming RPC
+
+Single request, sequence of responses. 
+
+```Go
+service GetFoos() {
+    getFoos(google.protobuf.StringValue) returns (stream Bar)
+}
+```
+
+### Client Streaming RPC
+
+Multiple requests, one response for each request. The responses could be after each request, a few of them or all of them.
+
+```Go
+service SetBar() {
+    rpc setBars(stream Foo) returns (Bar)
+}
+```
+
+### Bidirectional streaming RPC
+
+```Go
+service processMoo() {
+    rpc processMoos(stream Foo) returns (stream Bar)
+}
+```
+
+
+
